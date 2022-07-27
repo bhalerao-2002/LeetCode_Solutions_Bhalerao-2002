@@ -1,0 +1,17 @@
+//thanks to Solution
+class Solution {
+public:
+    TreeNode* prev;
+    
+    void flatten(TreeNode* root) {
+        if(!root) return;
+        //post-order traversal
+        //visit right child -> left child -> itself
+        flatten(root->right);
+        flatten(root->left);
+        //prev will be its successor in in-order traversal!
+        root->right = prev;
+        root->left = nullptr;
+        prev = root;
+    }
+};
