@@ -1,0 +1,28 @@
+//Thanks to Bhalerao-2002
+class Solution {
+public:
+    // top down dp
+    int combinationSum4(vector<int>& nums, int target) {
+        unordered_map<int, int> memo;
+        return dfs(nums, target, memo);
+    }
+    
+    int dfs(vector<int>& nums, int target, unordered_map<int, int>& memo) {
+        if (target < 0) 
+            return 0;
+        
+        if (target == 0) 
+            return 1;
+        
+        auto it = memo.find(target);
+        if (it != memo.end()) 
+            return it->second;
+        
+        int res = 0;
+        for (int num : nums) {
+            res += dfs(nums, target - num, memo);
+        }
+        
+        return memo[target] = res;
+    }
+};
