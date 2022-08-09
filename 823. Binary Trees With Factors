@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int numFactoredBinaryTrees(vector<int>& nums) {
+        long long res = 0, mod = pow(10,9) + 7;
+        unordered_map<int,long> dp;
+        // traverse from small to large
+        std::sort(nums.begin(), nums.end());
+        for(int i=0; i<nums.size(); i++){
+            dp[nums[i]] = 1; // only target itself
+            for(int j=0; j<i; j++){ // traverse from the smallest up to target
+                if( nums[i] % nums[j] == 0 && dp.count(nums[i]/nums[j]) )
+                    dp[nums[i]] += (dp[nums[j]] * dp[nums[i]/nums[j]]) % mod;
+            }
+        } for(auto iter = dp.begin(); iter != dp.end(); iter++) res += iter->second;
+        return res % mod;
+    }
+};
