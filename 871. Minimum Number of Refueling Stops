@@ -1,0 +1,45 @@
+#include <vector>
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+struct comp
+{
+    bool operator()(const vector<int> a, const vector<int> b) const
+    {
+        return a[1] < b[1];
+    }
+};
+
+class Solution {
+public:
+    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) 
+    {
+        vector<int> dp(1, startFuel);
+        int i = 0, j = 0;
+        priority_queue<vector<int>, vector<vector<int>>, comp> Q;
+        while (dp[i] < target) {
+            int last = 0, next = dp[i];
+            if (i > 0) {
+                last = dp[i - 1];
+            }
+            while (j < stations.size() && stations[j][0] >= last && stations[j][0] <= dp[i]) {
+                // cout << "last = " << last << " dp[i] = " << dp[i] << " j = " << j << endl;
+                Q.push(stations[j]);
+                j++;
+            }
+            if (!Q.empty()) {
+                vector<int> st = Q.top();
+                Q.pop();
+                next = max(next, dp[i] + st[1]);
+            } else {
+                return -1;
+            }       
+            dp.push_back(next);
+            i++;
+            cout << dp[i] << endl;
+        }
+        return i;
+    }
+};
