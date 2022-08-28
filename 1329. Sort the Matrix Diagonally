@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
+        int m = mat.size(), n = mat[0].size();
+        
+        int diag_num = (m-1)+1+(n-1);
+        for(int k = 0; k < diag_num; k++){
+            vector<int> tmp;
+            
+            for(int i = max(m-1-k, 0), j = max(k-m+1, 0); i < m && j < n; i++, j++){
+                tmp.push_back(mat[i][j]);
+            }
+         
+            sort(tmp.begin(), tmp.end());
+            for(int i = max(m-1-k, 0), j = max(k-m+1, 0), t = 0; i < m && j < n; i++, j++, t++){
+                mat[i][j] = tmp[t];
+            }
+        }
+        return mat;
+    }
+};
