@@ -1,0 +1,28 @@
+class Solution {
+public:
+    map<int, map<int, multiset<int>>> coord2values;
+    
+    void dfs(TreeNode* node, int x, int y){
+        if(node == nullptr) return;
+        
+        coord2values[x][y].insert(node->val);
+        dfs(node->left, x-1, y+1);
+        dfs(node->right, x+1, y+1);
+    }
+    
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        dfs(root, 0, 0);
+        
+        vector<vector<int>> ans;
+        
+        for(auto itx = coord2values.begin(); itx != coord2values.end(); ++itx){
+            vector<int> line;
+            for(auto ity = itx->second.begin(); ity != itx->second.end(); ++ity){
+                line.insert(line.end(), ity->second.begin(), ity->second.end());
+            }
+            ans.push_back(line);
+        }
+        
+        return ans;
+    }
+};
