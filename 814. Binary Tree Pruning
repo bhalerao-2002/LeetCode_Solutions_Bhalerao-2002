@@ -1,0 +1,21 @@
+class Solution {
+public:
+TreeNode* pruneTree(TreeNode* root) 
+{
+	if (root)
+	{
+		TreeNode* lefthasone = pruneTree(root->left);
+		TreeNode* righthasone = pruneTree(root->right);
+		if (!lefthasone)
+			root->left = NULL;
+		if (!righthasone)
+			root->right = NULL;
+
+		if (!lefthasone && !righthasone && root->val == 0)
+			return NULL;
+		else
+			return root;
+	}
+	return root;
+}
+};
