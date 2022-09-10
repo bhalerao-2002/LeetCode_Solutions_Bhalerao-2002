@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& prices) {
+        int n = prices.size();
+        int ans = 0;
+        
+        if(k >= n/2){
+            for(int i = 1; i < n; i++){
+                ans += max(0, prices[i]-prices[i-1]);
+            }
+            return ans;
+        }
+        
+        vector<int> holds(min(n,k)+1, INT_MIN);
+        vector<int> cashs(min(n,k)+1, 0);
+        
+        for(int price : prices){
+           for(int i = min(n,k); i >= 1; i--){
+               cashs[i] = max(cashs[i], holds[i]+price);
+               holds[i] = max(holds[i], cashs[i-1]-price);
+               ans = max(ans, cashs[i]);
+            }
+        }
+        
+        return ans;
+    }
+};
