@@ -1,0 +1,15 @@
+ long long cost = 0;
+        priority_queue<long long, vector<long long>, greater<long long>> pq;
+        for(long long i=0;i<n;i++){
+            pq.push(arr[i]);
+        }
+        while(pq.size()>1){
+            long long sum = 0;
+            sum+=pq.top();
+            pq.pop();
+            sum+=pq.top();
+            pq.pop();
+            cost+=sum;
+            pq.push(sum);
+        }
+        return cost;
