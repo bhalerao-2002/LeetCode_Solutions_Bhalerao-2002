@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int n;
+    vector<int> parent;
+    int find(int x)
+    {//thanks to bhalerao-2002
+        return parent[x] == x ? x : find(parent[x]);
+    }
+    int removeStones(vector<vector<int>>& stones) 
+    {
+        n = (int)stones.size();
+        parent.resize(n,0);
+        for(int i=0;i<n;i++)
+            parent[i] = i;
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(stones[i][0]==stones[j][0] or stones[i][1]==stones[j][1])
+                {
+                    int a = find(i);
+                    int b = find(j);
+                    if(a!=b)
+                        parent[b] = a;
+                }
+            }
+        }
+        int no_parent=0;
+        for(int i=0;i<n;i++)
+        {
+            if(parent[i]==i)
+                no_parent++;
+        }
+        return n-no_parent;
+    }
+};
