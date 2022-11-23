@@ -1,4 +1,5 @@
-Submission link With Solution: "https://leetcode.com/problems/valid-sudoku/solutions/2840545/easy-fasteroptimized-cpp-maths-only/"
+Submission link With Solution: 
+#https://leetcode.com/problems/valid-sudoku/solutions/2840545/easy-fasteroptimized-cpp-maths-only/
 class Solution {
 public:
     int coord2gridIdx(int i, int j){
