@@ -1,0 +1,19 @@
+class Solution {
+public://Thanks to Bhalerao-2002
+    int memo[50001] = {};
+    int dfs(vector<vector<int>>& comb, int pos, int last){
+        if(pos >= comb.size()) return 0; // end of array
+        if(comb[pos][0] < last) return dfs(comb, pos+1, last); // not allowed to take
+        if(memo[pos] != -1) return memo[pos]; // return previously computed result
+        int ans = 0;
+        ans = max(dfs(comb, pos+1, comb[pos][1])+comb[pos][2], dfs(comb, pos+1, 0)); // either schedule job and take the profit and add a 'last' constraint, or skip the job and reset the last constraint
+        return memo[pos] = ans;
+    }
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+        memset(memo, -1, sizeof memo);
+        vector<vector<int>> comb; // more convenient to put all values in one vector, also allows concurrent sorting
+        for(int i = 0; i < startTime.size(); i++) comb.push_back({startTime[i], endTime[i], profit[i]});
+        sort(comb.begin(), comb.end());
+        return dfs(comb, 0, 0);
+    }
+};
