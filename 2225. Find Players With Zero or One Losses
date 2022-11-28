@@ -1,0 +1,24 @@
+class Solution {
+public:// Thanks to Bhalerao-2002
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+        //Creating maps for Loosers and Winners
+        map<int,int> losses;
+        for(vector<int> v:matches){
+            int x = v[0],y = v[1];
+           if(losses.count(x)==0)losses[x]=0;
+           //counting losses
+           losses[y]++;
+        }
+        vector<int> noLoss,oneLoss;
+        for(auto it: losses){
+            if(it.second ==0){ //Push on (vector) that No loss
+                noLoss.push_back(it.first);
+            }
+            else if(it.second == 1){//Push on (vector) that One Loss
+                oneLoss.push_back(it.first);
+            }
+        }
+        //Return all  concusions
+         return {noLoss,oneLoss};
+    }
+};
